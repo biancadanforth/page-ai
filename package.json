@@ -1,0 +1,13 @@
+{
+  "name": "page-ai",
+  "version": "1.0.0",
+  "description": "Tool for tagging a previously tagged and frozen page (elements are tagged with the data-fathom attribute) for a Computer Vision approach to Fathom",
+  "main": "background.js",
+  "repository": "https://github.com/biancadanforth/page-ai",
+  "author": "Bianca Danforth <biancadanforth@gmail.com>",
+  "license": "MPL 2.0",
+  "private": null,
+  "devDependencies": {
+    "web-ext": "^3.1.1"
+  }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="chrome://browser/content/extension.css">
+    <style>
+      body {
+        padding: 0 20px;
+      }
+      #options {
+        float: right;
+        padding-right: 10px;
+      }
+      #options div {
+        text-align: right;
+      }
+      #options input[class="number"] {
+        text-align: right;
+      }
+      #status li.error {
+        color: darkred;
+      }
+      p.warning {
+        background-color: #FFFFBE;
+        border: 1px solid #FFE446;
+        padding: 1em;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="browser-style">
+    <h1>Page Retagger</h1>
+    <p>
+      This turns a series of frozen, labeled pages into frozen, labeled screenshots for use with PageAI. The screenshots land in a file in your usual downloads folder. Because web extensions aren't allowed to load <code>file://</code> URLs, you might find it necessary to run a local web server like <code>python3 -m http.server 8000 --bind 127.0.0.1</code> in the directory where your local samples live.
+    </p>
+    <label for="pages">Enter the pages to retag, one per line:</label>
+    <textarea id="pages" placeholder="1.html
+2.html" rows=10 class="browser-style">amazon-40 (1).html
+amazon-40 (10).html
+amazon-40 (11).html
+amazon-40 (12).html
+amazon-40 (13).html
+amazon-40 (14).html</textarea>
+    <form id="vectorizeForm">
+      <button id="freeze" disabled>Retag</button>
+      <div id="options">
+        <div>
+          <label for="wait" title="Wait this long before vectorizing the page. Sometimes this provides the necessary time for stylesheets to apply, for instance.">Delay:</label>
+          <input class="number" type="text" required pattern="[0-9]+" min="0" size="2" id="wait" value="1"> sec
+        </div>
+        <div>
+        <div>
+          <label title="Resize the window so the viewport is this big.">
+            Viewport Size:
+            <input class="number" type="text" required pattern="[0-9]+" size="4" id="viewportWidth" value="1024">
+            ×
+            <input class="number" type="text" required pattern="[0-9]+" size="4" id="viewportHeight" value="768">
+          </label>
+        </div>
+          <label for="baseUrl" title="This gets prepended to each page title to make a URL.">Base URL:</label>
+          <input type="text" size="30" id="baseUrl" value="http://127.0.0.1:8000/training/">
+        </div>
+        <div>
+          <input type="checkbox" id="retryOnError" checked="checked">
+          <label for="retryOnError" title="If there is an error in the ruleset or in in-browser communication, retry up to 10 times.">Retry on Error</label>
+        </div>
+      </div>
+    </form>
+    <ul id="status"></ul>
+    <script src="download.js"></script>
+    <script src="utils.js"></script>
+    <script src="visit.js"></script>
+    <script src="vector.js"></script>
+  </body>
+</html>
